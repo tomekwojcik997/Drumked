@@ -1,10 +1,16 @@
 export class App {
-    channel1: string[]=[];
+    channel1: string [] = [];
     constructor() {
         this.start();
     }
     start() {
         document.addEventListener('keydown',(e)=> {this.onKeyDown(e)})
+        document.querySelector('#playBtn').addEventListener('click',this.playChanel1);
+    }
+    playChanel1(): void {
+        this.channel1.forEach( sound => () {
+            this.playAudio('sound');
+        } )
     }
     onKeyDown(e: KeyboardEvent) {
         const key = e.key
@@ -61,7 +67,7 @@ export class App {
                 clap.currentTime = 0;
                 clap.play();
     }
-    recordSound(id : string){
+      recordSound(id:string) {
         this.channel1.push(id);
     }
 }

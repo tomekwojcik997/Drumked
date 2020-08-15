@@ -8,43 +8,43 @@ export class App {
     onKeyDown(e: KeyboardEvent) {
         const key = e.key
         switch(key){
-            case 'a':{
+            case 'a':
                 this.playAudio('boomAudio');
-                break;}
-            case 's':{
+                break;
+            case 's':
                 this.playAudio('clapAudio');
                 break;
-                }
-             case 'd':{
+                
+             case 'd':
                 this.playAudio('hihatAudio');
                 break;
-                }
-            case 'f':{
+                
+            case 'f':
                 this.playAudio('kickAudio');
                 break;
-                }
-            case 'g':{
+                
+            case 'g':
                 this.playAudio('openhatAudio');
                 break;
-                }
-            case 'h':{
+                
+            case 'h':
                 this.playAudio('rideAudio');
                 break;
-                }
-            case 'j':{
+                
+            case 'j':
                 this.playAudio('snareAudio');
                 break;
-                }
-            case 'k':{
-                this.playAudio('tinkAudio');
+                
+            case 'k':
+                this.playAudio('tomAudio');
                 break;
-                }
+                
         }
         
     }
     playAudio(id: string){
-        const clap :any = document.querySelector('#'+ id);
-                clap.currentTime=0;
+        const clap: HTMLAudioElement = document.querySelector('#'+ id);
+                clap.currentTime = 0;
                 clap.play();
     }
 }

@@ -1,65 +1,81 @@
+interface ChannelSound{
+    id: string;
+    time: number;
+}
+
+
 export class App {
-    channel1: string [] = [];
-    constructor() {
+    channel1: ChannelSound[] = [];
+    recStartTime: number ;
+    isRecording: boolean = false;
+        constructor() {
         this.start();
     }
     start() {
         document.addEventListener('keydown',(e)=> {this.onKeyDown(e)})
-        document.querySelector('#playBtn').addEventListener('click',this.playChanel1);
+        document.querySelector('#playBtn').addEventListener('click',()=>{this.playChannel1()});
+        document.querySelector('#recBtn').addEventListener('click',(e:MouseEvent)=>{this.recChannel1(e)});
     }
-    playChanel1(): void {
-        this.channel1.forEach( sound => () {
-            this.playAudio('sound');
-        } )
-    }
+    recChannel1(e: MouseEvent):void{
+        this.recStartTime=e.timeStamp;
+        this.isRecording = true;
+
+    };
+    playChannel1(): void {
+        this.isRecording = true;
+        const sound = this.channel1[0];
+        this.channel1.forEach(sound =>{ 
+        setTimeout(()=>{
+            this.playAudio(sound.id);
+        },
+        sound.time
+        )
+        })
+    };
+
     onKeyDown(e: KeyboardEvent) {
-        const key = e.key
+        const key = e.key;
+        const time = e.timeStamp - this.recStartTime;
+        let audioId : string;
         switch(key){
             case 'a':
-                this.playAudio('boomAudio');
-                this.recordSound('boomAudio');
+                audioId = 'boomAudio';
                 break;
             case 's':
-                this.playAudio('clapAudio');
-                this.recordSound('clapAudio');
+                audioId = 'clapAudio';
                 break;
                 
              case 'd':
-                this.playAudio('hihatAudio');
-                this.recordSound('hihatAudio');
+                audioId = 'hihatAudio';
                 break;
                 
             case 'f':
-                this.playAudio('kickAudio');
-                this.recordSound('kickAudio');
+                audioId = 'kickAudio';
                 break;
                 
             case 'g':
-                this.playAudio('openhatAudio');
-                this.recordSound('openhatAudio');
+                audioId = 'openhatAudio';
                 break;
                 
             case 'h':
-                this.playAudio('rideAudio');
-                this.recordSound('rideAudio');
+                audioId = 'rideAudio';
                 break;
                 
             case 'j':
-                this.playAudio('snareAudio');
-                this.recordSound('snareAudio');
+                audioId = 'snareAudio';
                 break;
 
             case 'k':
-                this.playAudio('tinkAudio');
-                this.recordSound('tinkAudio');
+                audioId = 'tinkAudio';
                 break;
                 
             case 'l':
-                this.playAudio('tomAudio');
-                this.recordSound('tomAudio');
+                audioId = 'tomAudio';
                 break;
                 
         }
+        this.playAudio(audioId);
+        this.recordSound(audioId,time);
         
     }
     playAudio(id: string){
@@ -67,7 +83,12 @@ export class App {
                 clap.currentTime = 0;
                 clap.play();
     }
-      recordSound(id:string) {
-        this.channel1.push(id);
+      recordSound(id:string , time:number) {
+        if(this.isRecording){
+        const sound : ChannelSound = {
+            id,
+            time
+        };
+        this.channel1.push(sound);}
     }
 }

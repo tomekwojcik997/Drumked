@@ -2,7 +2,9 @@ interface ChannelSound{
     id: string;
     time: number;
 }
-
+interface KeysToAudio{
+    [id: string]:string
+}
 
 export class App {
     channel1: ChannelSound[] = [];
@@ -36,8 +38,33 @@ export class App {
     onKeyDown(e: KeyboardEvent) {
         const key = e.key;
         const time = e.timeStamp - this.recStartTime;
-        let audioId : string;
-        switch(key){
+        //let audioId : string;
+        //const keys =['a','s','d','f','g','h','j','k','l'];
+        //const audioIds=['boomAudio','clapAudio','hihatAudio','kickAudio','openhatAudio','rideAudio','snareAudio','tinkAudio','tomAudio'];
+
+        //const audioIndex= keys.findIndex(el=>el===key);
+
+        const keysToAudioId:KeysToAudio={
+            'a':'boomAudio',
+            's':'clapAudio',
+            'd':'hihatAudio',
+            'f':'kickAudio',
+            'g':'openhatAudio',
+            'h':'rideAudio',
+            'j':'snareAudio',
+            'k':'tinkAudio',
+            'l':'tomAudio',
+        }
+           const audioId = keysToAudioId[key];
+           //audioId = audioIds[audioIndex];
+        
+        if(audioId){
+            //audioId=audioIds[audioIndex];
+            this.playAudio(audioId);
+            this.recordSound(audioId,time);
+        }
+
+       /* switch(key){
             case 'a':
                 audioId = 'boomAudio';
                 break;
@@ -73,7 +100,7 @@ export class App {
                 audioId = 'tomAudio';
                 break;
                 
-        }
+        }*/
         this.playAudio(audioId);
         this.recordSound(audioId,time);
         
